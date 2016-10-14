@@ -5,22 +5,43 @@ describe('RockPaperScissors the game', () => {
 	describe('New Game', () => {
 		it('the user should be able to create a different mode of game', () => {
 			const game = new RockPaperScissors();
-			game.setBazingaMode(true);
-			expect(game.bazingaMode).to.be.true;
+			game.bazingaMode = true;
+			expect(game.isBazingaMode).to.be.true;
 		});
 
 		it('the user should be able to change the game mode during the game', () => {
 			const game = new RockPaperScissors();
-			game.setBazingaMode(false);
-			expect(game.bazingaMode).to.be.false;
-			game.setBazingaMode(true);
-			expect(game.bazingaMode).to.be.true;
+			game.bazingaMode = false;
+			expect(game.isBazingaMode).to.be.false;
+			game.bazingaMode = true;
+			expect(game.isBazingaMode).to.be.true;
 		});
 
 		it('by default the game mode should be normal', () => {
 			const game = new RockPaperScissors();
-			expect(game.bazingaMode).to.be.false;
+			expect(game.isBazingaMode).to.be.false;
 		});
+
+		it('by default the simulation mode should be true', () => {
+			const game = new RockPaperScissors();
+			expect(game.isSimulation).to.be.true;
+		});
+
+		it('when the simulation is true, the players should be computers', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			expect(game.player1.isHuman).to.be.false;
+			expect(game.player2.isHuman).to.be.false;
+		});
+
+		it('when the simulation is false, the second player should be human', () => {
+			const game = new RockPaperScissors();
+			game.simulation = false;
+			game.start();
+			expect(game.player1.isHuman).to.be.false;
+			expect(game.player2.isHuman).to.be.true;
+		});
+
 	});
 
 });
