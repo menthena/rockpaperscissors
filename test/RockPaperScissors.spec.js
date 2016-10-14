@@ -1,4 +1,5 @@
 import RockPaperScissors from '../src/js/RockPaperScissors';
+import CONST from '../src/js/constant';
 
 describe('RockPaperScissors the game', () => {
 
@@ -64,28 +65,34 @@ describe('RockPaperScissors the game', () => {
 	});
 
 	describe('Play', () => {
-		it('Before making selection, the player`s selection should be not defined', () => {
+		it('Before making selection, the player`s selection should be rock', () => {
 			const game = new RockPaperScissors();
 			game.start();
 			const player1 = game.getPlayer(1);
-			expect(player1.selection).to.be.undefined;
+			expect(player1.selection).to.equal(CONST.ROCK);
 
 			const player2 = game.getPlayer(2);
-			expect(player2.selection).to.be.undefined;
+			expect(player2.selection).to.equal(CONST.ROCK);
 		});
 
 		it('When the player makes a selection, the game should save it', () => {
 			const game = new RockPaperScissors();
 			game.start();
 			const player1 = game.getPlayer(1);
-			expect(player1.selection).to.be.undefined;
 			game.makeSelection(1, 0);
 			expect(player1.selection).to.be.defined;
 
 			const player2 = game.getPlayer(2);
-			expect(player2.selection).to.be.undefined;
 			game.makeSelection(1, 0);
 			expect(player2.selection).to.be.defined;
+		});
+
+		it('When the players both throw their selection, their selections reset', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			const player2 = game.getPlayer(2);
+			game.makeSelection(2, CONST.PAPER);
+			expect(player2.selection).to.equal(CONST.PAPER);
 		});
 
 	});

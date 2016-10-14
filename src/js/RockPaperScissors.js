@@ -19,9 +19,9 @@ export default class RockPaperScissors {
     return this.normalOptions;
   }
 
-  makeSelection(playerIndex, optionIndex) {
+  makeSelection(playerIndex, option) {
     const player = this.getPlayer(playerIndex);
-    player.selection = optionIndex;
+    player.selection = option;
   }
 
   getPlayer(index) {
@@ -30,14 +30,20 @@ export default class RockPaperScissors {
 
   setPlayers() {
     this.player1 = {
-      isHuman: false
+      isHuman: false,
+      selection: CONST.ROCK
     };
     this.player2 = {
-      isHuman: false
+      isHuman: false,
+      selection: CONST.ROCK
     };
     if (!this.isSimulation) {
       this.player2.isHuman = true;
     }
+  }
+
+  play() {
+
   }
 
   set simulation(isSimulation) {
