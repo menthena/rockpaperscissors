@@ -63,4 +63,31 @@ describe('RockPaperScissors the game', () => {
 		});
 	});
 
+	describe('Play', () => {
+		it('Before making selection, the player`s selection should be not defined', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			const player1 = game.getPlayer(1);
+			expect(player1.selection).to.be.undefined;
+
+			const player2 = game.getPlayer(2);
+			expect(player2.selection).to.be.undefined;
+		});
+
+		it('When the player makes a selection, the game should save it', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			const player1 = game.getPlayer(1);
+			expect(player1.selection).to.be.undefined;
+			game.makeSelection(1, 0);
+			expect(player1.selection).to.be.defined;
+
+			const player2 = game.getPlayer(2);
+			expect(player2.selection).to.be.undefined;
+			game.makeSelection(1, 0);
+			expect(player2.selection).to.be.defined;
+		});
+
+	});
+
 });

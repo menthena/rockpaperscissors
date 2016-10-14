@@ -19,6 +19,15 @@ export default class RockPaperScissors {
     return this.normalOptions;
   }
 
+  makeSelection(playerIndex, optionIndex) {
+    const player = this.getPlayer(playerIndex);
+    player.selection = optionIndex;
+  }
+
+  getPlayer(index) {
+    return this['player' + index];
+  }
+
   setPlayers() {
     this.player1 = {
       isHuman: false
