@@ -44,4 +44,23 @@ describe('RockPaperScissors the game', () => {
 
 	});
 
+	describe('Options', () => {
+		it('the game should give players options for the game', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			const options = game.getOptions();
+			expect(options).not.to.be.undefined;
+			expect(options.length).to.equal(3);
+		});
+
+		it('when the game is in bazinga mode, it should give different options', () => {
+			const game = new RockPaperScissors();
+			game.bazingaMode = true;
+			game.start();
+			const options = game.getOptions();
+			expect(options).not.to.be.undefined;
+			expect(options.length).to.equal(5);
+		});
+	});
+
 });

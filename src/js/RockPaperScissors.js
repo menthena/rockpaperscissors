@@ -1,11 +1,22 @@
+import CONST from './constant';
+
 export default class RockPaperScissors {
   constructor() {
     this.isBazingaMode = false;
     this.isSimulation = true;
+    this.normalOptions = [CONST.ROCK, CONST.PAPER, CONST.SCISSORS];
+    this.bazingaOptions = [...this.normalOptions, CONST.LIZARD, CONST.SPOCK];
   }
 
   start() {
     this.setPlayers();
+  }
+
+  getOptions() {
+    if (this.isBazingaMode) {
+      return this.bazingaOptions;
+    }
+    return this.normalOptions;
   }
 
   setPlayers() {
