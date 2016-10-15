@@ -79,14 +79,25 @@ describe('RockPaperScissors the game', () => {
 
 		it('When the player makes a selection, the game should save it', () => {
 			const game = new RockPaperScissors();
+			game.simulation = false;
 			game.start();
-			const player1 = game.getPlayer(1);
-			game.makeSelection(1, 0);
-			expect(player1.selection).to.be.defined;
 
 			const player2 = game.getPlayer(2);
-			game.makeSelection(1, 0);
-			expect(player2.selection).to.be.defined;
+			game.makeSelection(2, CONST.LIZARD);
+			expect(player2.selection).to.equal(CONST.LIZARD);
+		});
+
+		it('The user can change their selection', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			const player1 = game.getPlayer(1);
+			const player2 = game.getPlayer(2);
+			game.makeSelection(1, CONST.SPOCK);
+			expect(player1.selection).to.equal(CONST.SPOCK);
+
+			game.makeSelection(2, CONST.PAPER);
+			// TODO: Use new function
+			expect(player2.selection).to.equal(CONST.PAPER);
 		});
 
 		it('When the players both throw their selection, their selections reset', () => {
