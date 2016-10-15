@@ -65,11 +65,17 @@ export default class RockPaperScissors {
     return player.selection;
   }
 
+  getRandomSelection() {
+    let options = this.getOptions();
+    let randomIndex = Math.round(Math.random() * (options.length - 1));
+    return options[randomIndex];
+  }
+
   simulate() {
     [1, 2].forEach((playerIndex) => {
       let player = this.getPlayer(playerIndex);
       if (!player.isHuman) {
-        player.selection = CONST.ROCK;
+        player.selection = this.getRandomSelection();
       }
     });
   }

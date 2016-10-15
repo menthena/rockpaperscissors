@@ -67,6 +67,7 @@ describe('RockPaperScissors the game', () => {
 	describe('Play', () => {
 		it('Before making selection, the human player`s selection should be rock', () => {
 			const game = new RockPaperScissors();
+			game.simulation = false;
 			game.start();
 			game.simulate();
 			const player1 = game.getPlayer(1);
