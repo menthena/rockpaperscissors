@@ -109,7 +109,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.PAPER);
 			game.makeSelection(2, CONST.PAPER);
-			game.throw();
+			game.end();
 			expect(game.winner).to.be.undefined;
 		});
 
@@ -118,7 +118,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.PAPER);
 			game.makeSelection(2, CONST.ROCK);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -127,7 +127,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.PAPER);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(2);
 		});
 
@@ -136,7 +136,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.ROCK);
 			game.makeSelection(2, CONST.SCISSORS);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -145,7 +145,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.ROCK);
 			game.makeSelection(2, CONST.LIZARD);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -154,7 +154,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SCISSORS);
 			game.makeSelection(2, CONST.PAPER);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -163,7 +163,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SCISSORS);
 			game.makeSelection(2, CONST.LIZARD);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -172,7 +172,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.LIZARD);
 			game.makeSelection(2, CONST.PAPER);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -181,7 +181,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.LIZARD);
 			game.makeSelection(2, CONST.SPOCK);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -190,7 +190,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.ROCK);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -199,7 +199,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.SCISSORS);
-			game.throw();
+			game.end();
 			expect(game.winner).to.equal(1);
 		});
 	});
@@ -240,9 +240,42 @@ describe('RockPaperScissors the game', () => {
 			const game = new RockPaperScissors();
 			game.start();
 			game.simulate();
-			game.throw();
+			game.end();
 			expect(game.getPlayerSelection(1)).to.be.not.undefined;
 			expect(game.getPlayerSelection(2)).to.be.not.undefined;
+		});
+	});
+
+	describe('Schedule Throw', () => {
+		it('should schedule a throw after the timeout passes', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS);
+			expect(game.inProgress).to.be.true;
+		});
+
+		it('should be still in progress half of the timeout', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS);
+			expect(game.inProgress).to.be.true;
+
+			setTimeout(() => {
+				expect(game.inProgress).to.be.true;
+			}, CONST.THROW_TIMEOUT_IN_SECONDS / 2);
+		});
+
+		it('should no longer be in progress', (done) => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS);
+			expect(game.inProgress).to.be.true;
+
+			setTimeout(() => {
+				expect(game.inProgress).to.be.false;
+				done();
+			}, CONST.THROW_TIMEOUT_IN_SECONDS);
+
 		});
 	});
 

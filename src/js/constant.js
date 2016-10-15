@@ -3,5 +3,6 @@ export default {
   PAPER: 'Paper',
   SCISSORS: 'Scissors',
   LIZARD: 'Lizard',
-  SPOCK: 'Spock'
+  SPOCK: 'Spock',
+  THROW_TIMEOUT_IN_SECONDS: 3
 };
