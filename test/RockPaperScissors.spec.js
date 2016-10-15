@@ -198,4 +198,17 @@ describe('RockPaperScissors the game', () => {
 		});
 	});
 
+	describe('Selection', () => {
+		it('should return the player`s selection', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.SPOCK);
+			game.makeSelection(2, CONST.PAPER);
+			let selection = game.getPlayerSelection(1);
+			expect(selection).to.equal(CONST.SPOCK);
+			selection = game.getPlayerSelection(2);
+			expect(selection).to.equal(CONST.PAPER);
+		});
+	});
+
 });

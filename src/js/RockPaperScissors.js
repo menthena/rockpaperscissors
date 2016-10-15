@@ -59,9 +59,14 @@ export default class RockPaperScissors {
     }
   }
 
+  getPlayerSelection(playerIndex) {
+    let player = this.getPlayer(playerIndex);
+    return player.selection;
+  }
+
   play() {
-    let firstPlayerSelection = this.player1.selection;
-    let secondPlayerSelection = this.player2.selection;
+    let firstPlayerSelection = this.getPlayerSelection(1);
+    let secondPlayerSelection = this.getPlayerSelection(2);
 
     if (firstPlayerSelection === secondPlayerSelection) {
       this.winner = undefined;
