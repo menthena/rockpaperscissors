@@ -2,7 +2,6 @@ import RockPaperScissors from '../src/js/RockPaperScissors';
 import CONST from '../src/js/constant';
 
 describe('RockPaperScissors the game', () => {
-
 	describe('New Game', () => {
 		it('the user should be able to create a different mode of game', () => {
 			const game = new RockPaperScissors();
@@ -250,32 +249,56 @@ describe('RockPaperScissors the game', () => {
 		it('should schedule a throw after the timeout passes', () => {
 			const game = new RockPaperScissors();
 			game.start();
-			game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS);
+			game.scheduleEnd(1);
 			expect(game.inProgress).to.be.true;
 		});
 
-		it('should be still in progress half of the timeout', () => {
+		it('should be still in progress half of the timeout', (done) => {
 			const game = new RockPaperScissors();
 			game.start();
-			game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS);
+			game.scheduleEnd(1);
 			expect(game.inProgress).to.be.true;
 
 			setTimeout(() => {
 				expect(game.inProgress).to.be.true;
-			}, CONST.THROW_TIMEOUT_IN_SECONDS / 2);
+				done();
+			}, 500);
 		});
 
 		it('should no longer be in progress', (done) => {
 			const game = new RockPaperScissors();
 			game.start();
-			game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS);
+			game.scheduleEnd(1);
 			expect(game.inProgress).to.be.true;
 
 			setTimeout(() => {
 				expect(game.inProgress).to.be.false;
 				done();
-			}, CONST.THROW_TIMEOUT_IN_SECONDS);
+			}, 1000);
 
+		});
+
+		it('the timeleft should not be the same after a second passes', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.scheduleEnd(10);
+			expect(game.timeleft).not.to.be.undefined;
+		});
+
+		it('timeleft should be the default throw timeout when not set', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			expect(game.timeleft).to.equal(CONST.THROW_TIMEOUT_IN_SECONDS);
+		});
+
+		it('should not return 3s remaining after a second passes', (done) => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.scheduleEnd(3);
+			setTimeout(() => {
+				expect(game.timeleft).to.not.equal(3);
+				done();
+			}, 1000);
 		});
 	});
 

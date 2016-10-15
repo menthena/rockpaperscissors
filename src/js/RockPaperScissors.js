@@ -2,7 +2,7 @@ import CONST from './constant';
 
 export default class RockPaperScissors {
   constructor() {
-    this.inProgress = false;
+    this.timeLeft = 0;
     this.isBazingaMode = false;
     this.isSimulation = true;
     this.normalOptions = [CONST.ROCK, CONST.PAPER, CONST.SCISSORS];
@@ -17,6 +17,7 @@ export default class RockPaperScissors {
   }
 
   start() {
+    this.reset();
     this.inProgress = true;
     this.setPlayers();
   }
@@ -82,10 +83,21 @@ export default class RockPaperScissors {
     });
   }
 
+  get timeleft() {
+    if (!this.timeLeft) {
+      return CONST.THROW_TIMEOUT_IN_SECONDS;
+    } else {
+      const now = new Date();
+      return (this.timeLeft - now) / 1000;
+    }
+  }
+
   scheduleEnd(timeoutInSeconds) {
+    const now = new Date();
+    this.timeLeft = now.setSeconds(now.getSeconds() + timeoutInSeconds);
     setTimeout(() => {
       this.end();
-    }, timeoutInSeconds);
+    }, timeoutInSeconds * 1000);
   }
 
   end() {
@@ -99,7 +111,12 @@ export default class RockPaperScissors {
     } else {
       this.winner = 2;
     }
+    this.reset();
+  }
+
+  reset() {
     this.inProgress = false;
+    this.timeLeft = undefined;
   }
 
   set simulation(isSimulation) {
