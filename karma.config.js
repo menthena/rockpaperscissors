@@ -30,6 +30,12 @@ module.exports = function (config) {
 			'test/webpack.bundle.js': ['webpack', 'sourcemap']
 		},
 
+		client: {
+			mocha: {
+				timeout: 6000
+			}
+		},
+
 		webpack: webpackConfig,
 
 		webpackServer: {
