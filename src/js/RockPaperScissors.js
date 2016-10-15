@@ -47,21 +47,31 @@ export default class RockPaperScissors {
 
   setPlayers() {
     this.player1 = {
-      isHuman: false,
-      selection: CONST.ROCK
+      isHuman: false
     };
     this.player2 = {
-      isHuman: false,
-      selection: CONST.ROCK
+      isHuman: false
     };
     if (!this.isSimulation) {
-      this.player2.isHuman = true;
+      this.player2 = {
+        isHuman: true,
+        selection: CONST.ROCK
+      }
     }
   }
 
   getPlayerSelection(playerIndex) {
     let player = this.getPlayer(playerIndex);
     return player.selection;
+  }
+
+  simulate() {
+    [1, 2].forEach((playerIndex) => {
+      let player = this.getPlayer(playerIndex);
+      if (!player.isHuman) {
+        player.selection = CONST.ROCK;
+      }
+    });
   }
 
   play() {

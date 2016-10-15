@@ -65,11 +65,12 @@ describe('RockPaperScissors the game', () => {
 	});
 
 	describe('Play', () => {
-		it('Before making selection, the player`s selection should be rock', () => {
+		it('Before making selection, the human player`s selection should be rock', () => {
 			const game = new RockPaperScissors();
 			game.start();
+			game.simulate();
 			const player1 = game.getPlayer(1);
-			expect(player1.selection).to.equal(CONST.ROCK);
+			expect(player1.selection).not.to.be.undefined;
 
 			const player2 = game.getPlayer(2);
 			expect(player2.selection).to.equal(CONST.ROCK);
@@ -204,10 +205,39 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.PAPER);
-			let selection = game.getPlayerSelection(1);
-			expect(selection).to.equal(CONST.SPOCK);
-			selection = game.getPlayerSelection(2);
-			expect(selection).to.equal(CONST.PAPER);
+			let firstPlayerSelection = game.getPlayerSelection(1);
+			let secondPlayerSelection = game.getPlayerSelection(2);
+			expect(firstPlayerSelection).to.equal(CONST.SPOCK);
+			expect(secondPlayerSelection).to.equal(CONST.PAPER);
+		});
+	});
+
+	describe('Simulation', () => {
+		it('When the player is CPU, the selection should be undefined', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			expect(game.getPlayerSelection(1)).to.be.undefined;
+			expect(game.getPlayerSelection(2)).to.be.undefined;
+		});
+
+		it('Random selection should be one of the options', () => {
+			const game = new RockPaperScissors();
+			const options = game.getOptions();
+			game.start();
+			game.simulate();
+			let firstCPUSelection = game.getPlayerSelection(1);
+			let secondCPUSelection = game.getPlayerSelection(2);
+			expect(options.includes(firstCPUSelection)).to.be.true;
+			expect(options.includes(secondCPUSelection)).to.be.true;
+		});
+
+		it('When the player is CPU, the selection should NOT be undefined', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.simulate();
+			game.play();
+			expect(game.getPlayerSelection(1)).to.be.not.undefined;
+			expect(game.getPlayerSelection(2)).to.be.not.undefined;
 		});
 	});
 
