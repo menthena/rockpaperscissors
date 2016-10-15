@@ -97,4 +97,105 @@ describe('RockPaperScissors the game', () => {
 
 	});
 
+	describe('Rules', () => {
+		it('Should be resulted as tie when both players select the same', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.PAPER);
+			game.makeSelection(2, CONST.PAPER);
+			game.play();
+			expect(game.winner).to.be.undefined;
+		});
+
+		it('Paper against rock should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.PAPER);
+			game.makeSelection(2, CONST.ROCK);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Paper against spock should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.SPOCK);
+			game.makeSelection(2, CONST.PAPER);
+			game.play();
+			expect(game.winner).to.equal(2);
+		});
+
+		it('Rock against scissors should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.ROCK);
+			game.makeSelection(2, CONST.SCISSORS);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Rock against lizard should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.ROCK);
+			game.makeSelection(2, CONST.LIZARD);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Scissors against paper should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.SCISSORS);
+			game.makeSelection(2, CONST.PAPER);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Scissors against lizard should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.SCISSORS);
+			game.makeSelection(2, CONST.LIZARD);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Lizard against paper should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.LIZARD);
+			game.makeSelection(2, CONST.PAPER);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Lizard against spock should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.LIZARD);
+			game.makeSelection(2, CONST.SPOCK);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Spock against rock should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.SPOCK);
+			game.makeSelection(2, CONST.ROCK);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+
+		it('Spock against scissors should win', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			game.makeSelection(1, CONST.SPOCK);
+			game.makeSelection(2, CONST.SCISSORS);
+			game.play();
+			expect(game.winner).to.equal(1);
+		});
+	});
+
 });

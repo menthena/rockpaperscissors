@@ -6,6 +6,13 @@ export default class RockPaperScissors {
     this.isSimulation = true;
     this.normalOptions = [CONST.ROCK, CONST.PAPER, CONST.SCISSORS];
     this.bazingaOptions = [...this.normalOptions, CONST.LIZARD, CONST.SPOCK];
+    this.winningScenarios = {
+      [CONST.ROCK]: [CONST.SCISSORS, CONST.LIZARD],
+      [CONST.PAPER]: [CONST.ROCK, CONST.SPOCK],
+      [CONST.SCISSORS]: [CONST.PAPER, CONST.LIZARD],
+      [CONST.LIZARD]: [CONST.PAPER, CONST.SPOCK],
+      [CONST.SPOCK]: [CONST.ROCK, CONST.SCISSORS]
+    };
   }
 
   start() {
@@ -28,6 +35,16 @@ export default class RockPaperScissors {
     return this['player' + index];
   }
 
+  isFirstPlayerWinner(firstPlayerSelection, secondPlayerSelection) {
+    for (let index in this.winningScenarios) {
+      let ruleMatchesSelection = index === firstPlayerSelection;
+      let isWinningScenario = this.winningScenarios[index].includes(secondPlayerSelection);
+      if (ruleMatchesSelection && isWinningScenario) {
+        return true;
+      }
+    }
+  }
+
   setPlayers() {
     this.player1 = {
       isHuman: false,
@@ -43,7 +60,16 @@ export default class RockPaperScissors {
   }
 
   play() {
+    let firstPlayerSelection = this.player1.selection;
+    let secondPlayerSelection = this.player2.selection;
 
+    if (firstPlayerSelection === secondPlayerSelection) {
+      this.winner = undefined;
+    } else if (this.isFirstPlayerWinner(firstPlayerSelection, secondPlayerSelection)) {
+      this.winner = 1;
+    } else {
+      this.winner = 2;
+    }
   }
 
   set simulation(isSimulation) {
