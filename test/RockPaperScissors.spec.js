@@ -70,11 +70,9 @@ describe('RockPaperScissors the game', () => {
 			game.simulation = false;
 			game.start();
 			game.simulate();
-			const player1 = game.getPlayer(1);
-			expect(player1.selection).not.to.be.undefined;
+			expect(game.getPlayerSelection(1)).not.to.be.undefined;
 
-			const player2 = game.getPlayer(2);
-			expect(player2.selection).to.equal(CONST.ROCK);
+			expect(game.getPlayerSelection(2)).to.equal(CONST.ROCK);
 		});
 
 		it('When the player makes a selection, the game should save it', () => {
@@ -82,30 +80,25 @@ describe('RockPaperScissors the game', () => {
 			game.simulation = false;
 			game.start();
 
-			const player2 = game.getPlayer(2);
 			game.makeSelection(2, CONST.LIZARD);
-			expect(player2.selection).to.equal(CONST.LIZARD);
+			expect(game.getPlayerSelection(2)).to.equal(CONST.LIZARD);
 		});
 
 		it('The user can change their selection', () => {
 			const game = new RockPaperScissors();
 			game.start();
-			const player1 = game.getPlayer(1);
-			const player2 = game.getPlayer(2);
 			game.makeSelection(1, CONST.SPOCK);
-			expect(player1.selection).to.equal(CONST.SPOCK);
+			expect(game.getPlayerSelection(1)).to.equal(CONST.SPOCK);
 
 			game.makeSelection(2, CONST.PAPER);
-			// TODO: Use new function
-			expect(player2.selection).to.equal(CONST.PAPER);
+			expect(game.getPlayerSelection(2)).to.equal(CONST.PAPER);
 		});
 
 		it('When the players both throw their selection, their selections reset', () => {
 			const game = new RockPaperScissors();
 			game.start();
-			const player2 = game.getPlayer(2);
 			game.makeSelection(2, CONST.PAPER);
-			expect(player2.selection).to.equal(CONST.PAPER);
+			expect(game.getPlayerSelection(2)).to.equal(CONST.PAPER);
 		});
 
 	});
