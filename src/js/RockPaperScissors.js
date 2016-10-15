@@ -80,7 +80,7 @@ export default class RockPaperScissors {
     });
   }
 
-  play() {
+  throw() {
     let firstPlayerSelection = this.getPlayerSelection(1);
     let secondPlayerSelection = this.getPlayerSelection(2);
 

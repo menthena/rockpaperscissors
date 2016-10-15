@@ -109,7 +109,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.PAPER);
 			game.makeSelection(2, CONST.PAPER);
-			game.play();
+			game.throw();
 			expect(game.winner).to.be.undefined;
 		});
 
@@ -118,7 +118,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.PAPER);
 			game.makeSelection(2, CONST.ROCK);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -127,7 +127,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.PAPER);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(2);
 		});
 
@@ -136,7 +136,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.ROCK);
 			game.makeSelection(2, CONST.SCISSORS);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -145,7 +145,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.ROCK);
 			game.makeSelection(2, CONST.LIZARD);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -154,7 +154,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SCISSORS);
 			game.makeSelection(2, CONST.PAPER);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -163,7 +163,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SCISSORS);
 			game.makeSelection(2, CONST.LIZARD);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -172,7 +172,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.LIZARD);
 			game.makeSelection(2, CONST.PAPER);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -181,7 +181,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.LIZARD);
 			game.makeSelection(2, CONST.SPOCK);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -190,7 +190,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.ROCK);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 
@@ -199,7 +199,7 @@ describe('RockPaperScissors the game', () => {
 			game.start();
 			game.makeSelection(1, CONST.SPOCK);
 			game.makeSelection(2, CONST.SCISSORS);
-			game.play();
+			game.throw();
 			expect(game.winner).to.equal(1);
 		});
 	});
@@ -240,7 +240,7 @@ describe('RockPaperScissors the game', () => {
 			const game = new RockPaperScissors();
 			game.start();
 			game.simulate();
-			game.play();
+			game.throw();
 			expect(game.getPlayerSelection(1)).to.be.not.undefined;
 			expect(game.getPlayerSelection(2)).to.be.not.undefined;
 		});
