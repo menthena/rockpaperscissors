@@ -38,6 +38,15 @@ export default class RockPaperScissors {
     return this['player' + index];
   }
 
+  getPlayerText(index) {
+    const player = this.getPlayer(index);
+    if (player.isHuman) {
+      return 'You'
+    } else {
+      return 'CPU';
+    }
+  }
+
   isFirstPlayerWinner(firstPlayerSelection, secondPlayerSelection) {
     for (let index in this.winningScenarios) {
       let ruleMatchesSelection = index === firstPlayerSelection;
@@ -88,15 +97,18 @@ export default class RockPaperScissors {
       return CONST.THROW_TIMEOUT_IN_SECONDS;
     } else {
       const now = new Date();
-      return (this.timeLeft - now) / 1000;
+      return Math.ceil((this.timeLeft - now) / 1000);
     }
   }
 
-  scheduleEnd(timeoutInSeconds) {
+  scheduleEnd(timeoutInSeconds, cb) {
     const now = new Date();
     this.timeLeft = now.setSeconds(now.getSeconds() + timeoutInSeconds);
     setTimeout(() => {
       this.end();
+      if (cb) {
+        cb();
+      }
     }, timeoutInSeconds * 1000);
   }
 

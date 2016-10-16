@@ -1,6 +1,10 @@
 @import 'variables';
 
 #rock-paper-scissors {
+  h1 {
+    text-align: center;
+    display: block;
+  }
   nav {
     li {
       display: inline-block;
@@ -58,4 +62,41 @@
 }
 
 #game {
+  text-align: center;
+  padding-bottom: 20px;
+  .player {
+    opacity: 0.5;
+    margin-bottom: 5px;
+  }
+
+  #winner, #timer {
+    font-size: 24px;
+    margin: 20px;
+  }
+
+  i {
+    margin: 5px auto;
+  }
+
+  #player2-options-header {
+    margin: 10px;
+    background: darken($dark-color, 10);
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  #player2-options-wrapper .icon-selected i {
+    border-radius: 99px;
+    border: 4px #FFF solid;
+  }
+
+  #player2-options-wrapper {
+    i {
+      display: inline-block;
+      border: 4px $dark-color solid;
+    }
+    &[aria-hidden="true"] {
+      display: none;
+    }
+  }
 }

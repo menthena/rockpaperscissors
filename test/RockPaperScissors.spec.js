@@ -300,6 +300,37 @@ describe('RockPaperScissors the game', () => {
 				done();
 			}, 1000);
 		});
+
+		it('should call the cb function when it is done', (done) => {
+			let result = 0;
+			// Note: Sinon was giving me issues with webpack, I had to fake a callback
+			function cb() {
+				result = 1;
+			}
+			const game = new RockPaperScissors();
+			game.start();
+			game.scheduleEnd(1, cb);
+			setTimeout(() => {
+				expect(result).to.equal(1);
+				done();
+			}, 1000);
+		});
 	});
+
+	describe('Game output', () => {
+		it('should return CPU when both players are CPU', () => {
+			const game = new RockPaperScissors();
+			game.start();
+			expect(game.getPlayerText(1)).to.equal('CPU');
+			expect(game.getPlayerText(2)).to.equal('CPU');
+		});
+
+		it('should return `You` as second player when the game is not simulation', () => {
+			const game = new RockPaperScissors();
+			game.isSimulation = false;
+			game.start();
+			expect(game.getPlayerText(2)).to.equal('You');
+		});
+	})
 
 });

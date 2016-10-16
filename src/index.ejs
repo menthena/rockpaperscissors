@@ -10,7 +10,7 @@
 	<main id="rock-paper-scissors">
 		<nav>
 			<ul>
-				<li><button onclick="newGame()">New game</button></li>
+				<li><button onclick="self.location='';">New game</button></li>
 				<li><button onclick="resetGame()" id="reset-game" aria-hidden="true">Reset game</button></li>
 			</ul>
 		</nav>
@@ -40,6 +40,20 @@
 
 		<section id="game" aria-hidden="true">
 			<h1>Rock paper scissors</h1>
+			<div class="player">Player 1</div>
+			<div id="player1"></div>
+			<i id="player1-selection"></i>
+
+			<div id="winner"></div>
+			<div id="timer"></div>
+
+			<div class="player">Player 2</div>
+			<div id="player2"></div>
+			<i id="player2-selection"></i>
+			<div id="player2-options-wrapper" aria-hidden="true">
+				<div id="player2-options-header">Please select one of these options</div>
+				<div id="player2-options"></div>
+			</div>
 		</section>
 	</main>
 </body>
