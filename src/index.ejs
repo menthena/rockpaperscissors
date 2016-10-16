@@ -7,6 +7,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-	<h1>you are ready to go! :)</h1>
+	<main id="rock-paper-scissors">
+		<nav>
+			<ul>
+				<li><button>New game</button></li>
+				<li><button onclick="" id="reset-game" aria-hidden="true">Reset game</button></li>
+			</ul>
+		</nav>
+		<section id="game-customization">
+			<h1>Rock paper scissors</h1>
+			<form>
+				<fieldset>
+					<legend>Game mode</legend>
+						<input type="radio" name="game-mode" checked id="game-mode-normal" value="normal">
+						<label for="game-mode-normal">Normal</label>
+
+						<input type="radio" name="game-mode" id="game-mode-bazinga" value="bazinga">
+						<label for="game-mode-bazinga">Bazinga!</label>
+				</fieldset>
+				<fieldset>
+					<legend>Simulation</legend>
+						<input type="radio" name="simulate" checked id="simulate-cpu" value="cpu">
+						<label for="simulate-cpu">Computer vs Computer</label>
+
+						<input type="radio" name="simulate" id="simulate-human" value="human">
+						<label for="simulate-human">Computer vs You</label>
+
+					<button>Go</button>
+				</fieldset>
+			</form>
+		</section>
+	</main>
 </body>
 </html>

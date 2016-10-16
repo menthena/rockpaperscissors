@@ -1,0 +1,50 @@
+@import 'variables';
+
+#rock-paper-scissors {
+  nav {
+    button {
+      background: darken($dark-color, 10);
+      margin-right: 5px;
+    }
+
+    #reset-game[aria-hidden="true"] {
+      display: none;
+    }
+  }
+}
+
+#game-customization {
+  border: 1px lighten($dark-color, 30) solid;
+  border-radius: 6px;
+  padding: 0px 15px;
+  margin-top: 10px;
+
+  fieldset {
+    border: 0;
+    padding: 0 0 20px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  legend {
+    font-weight: bold;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px lighten($dark-color, 30) solid;
+    padding: 0 0 5px;
+    color: lighten($dark-color, 60);
+    margin: 10px 0;
+  }
+
+  button {
+    display: block;
+    margin: 15px 0 0;
+    background: #419bf9;
+    color: #FFF;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+  }
+}

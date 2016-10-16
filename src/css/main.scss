@@ -1,7 +1,2 @@
-body {
-	background-color: green;
-
-	h1 {
-		color: white;
-	}
-}
+@import 'shared';
+@import 'game';
