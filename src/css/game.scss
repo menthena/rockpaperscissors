@@ -12,6 +12,9 @@
     button {
       background: darken($dark-color, 10);
       margin-right: 5px;
+      &[disabled="true"] {
+        opacity: 0.5;
+      }
     }
 
     #reset-game[aria-hidden="true"] {

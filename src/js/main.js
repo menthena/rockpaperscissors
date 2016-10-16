@@ -24,6 +24,7 @@ class GameUIWrapper {
   clearUI() {
     timerElement.innerText = '';
     player2OptionsWrapper.setAttribute('aria-hidden', true);
+    resetButtonElement.removeAttribute('disabled');
     clearInterval(intervalId);
   }
 
@@ -69,12 +70,15 @@ class GameUIWrapper {
   }
 
   resetGame() {
-    player1SelectionElement.className = player2SelectionElement.className = '';
-    winnerElement.innerText = '';
-    this.startGame();
+    if (!this.game.inProgress) {
+      player1SelectionElement.className = player2SelectionElement.className = '';
+      winnerElement.innerText = '';
+      this.startGame();
+    }
   }
 
   startGame() {
+    resetButtonElement.setAttribute('disabled', true);
     const isBazingaMode = document.getElementById('game-mode-bazinga').checked;
     const isSimulation = document.getElementById('simulate-cpu').checked;
 
