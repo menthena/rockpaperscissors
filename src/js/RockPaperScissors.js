@@ -16,12 +16,18 @@ export default class RockPaperScissors {
     };
   }
 
+  /** Starts the game
+    */
   start() {
     this.reset();
     this.inProgress = true;
     this.setPlayers();
   }
 
+  /** Player's options to play
+    * (On bazinga moda) returns different option
+    * @returns {Array} Options
+    */
   getOptions() {
     if (this.isBazingaMode) {
       return this.bazingaOptions;
@@ -29,15 +35,27 @@ export default class RockPaperScissors {
     return this.normalOptions;
   }
 
+  /** Lets player to make a choice
+    * @param {Number} playerIndex
+    * @param {String} option
+    */
   makeSelection(playerIndex, option) {
     const player = this.getPlayer(playerIndex);
     player.selection = option;
   }
 
+  /** Returns the player object by index
+    * @param {Number} index
+    * @returns {Object} Player
+    */
   getPlayer(index) {
     return this['player' + index];
   }
 
+  /** Returns human-friendly text
+    * @param {Number} index
+    * @returns {String} text
+    */
   getPlayerText(index) {
     const player = this.getPlayer(index);
     if (player.isHuman) {
@@ -47,6 +65,11 @@ export default class RockPaperScissors {
     }
   }
 
+  /** Verifies whether first player won or not
+    * @param {String} firstPlayerSelection
+    * @param {String} secondPlayerSelection
+    * @returns {Boolean} isFirstPlayerWinner
+    */
   isFirstPlayerWinner(firstPlayerSelection, secondPlayerSelection) {
     for (let index in this.winningScenarios) {
       let ruleMatchesSelection = index === firstPlayerSelection;
@@ -57,6 +80,8 @@ export default class RockPaperScissors {
     }
   }
 
+  /** Add players to the game
+    */
   setPlayers() {
     this.player1 = {
       isHuman: false
@@ -72,17 +97,26 @@ export default class RockPaperScissors {
     }
   }
 
+  /** Returns player's selection
+    * @param {Number} playerIndex
+    * @returns {Obbject} selection
+    */
   getPlayerSelection(playerIndex) {
     let player = this.getPlayer(playerIndex);
     return player.selection;
   }
 
+  /** Returns one random selection
+    * @returns {String} randomSelection
+    */
   getRandomSelection() {
     let options = this.getOptions();
     let randomIndex = Math.round(Math.random() * (options.length - 1));
     return options[randomIndex];
   }
 
+  /** Simulates a selection
+    */
   simulate() {
     [1, 2].forEach((playerIndex) => {
       let player = this.getPlayer(playerIndex);
@@ -92,6 +126,9 @@ export default class RockPaperScissors {
     });
   }
 
+  /** Returns the time left for players to play the game
+    * @returns {Number} timeleftInSeconds
+    */
   get timeleft() {
     if (!this.timeLeft) {
       return CONST.THROW_TIMEOUT_IN_SECONDS;
@@ -101,6 +138,10 @@ export default class RockPaperScissors {
     }
   }
 
+  /** Schedules the end method and updates the time left
+    * @param {Number} timeoutInSeconds
+    * @param {Function} callback
+    */
   scheduleEnd(timeoutInSeconds, cb) {
     const now = new Date();
     this.timeLeft = now.setSeconds(now.getSeconds() + timeoutInSeconds);
@@ -112,6 +153,8 @@ export default class RockPaperScissors {
     }, timeoutInSeconds * 1000);
   }
 
+  /** Ends the game
+    */
   end() {
     let firstPlayerSelection = this.getPlayerSelection(1);
     let secondPlayerSelection = this.getPlayerSelection(2);
@@ -126,6 +169,8 @@ export default class RockPaperScissors {
     this.reset();
   }
 
+  /** Reset game parameters
+    */
   reset() {
     this.inProgress = false;
     this.timeLeft = undefined;

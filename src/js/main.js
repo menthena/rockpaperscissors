@@ -16,11 +16,18 @@ const player2NameElement = document.getElementById('player2');
 const winnerElement = document.getElementById('winner');
 const timerElement = document.getElementById('timer');
 
+/** GameUIWrapper
+  * Please note that, the focus was on RockPaperScissors class
+  * Purpose of this wrapper to bind the game onto view
+  * Since there was no frameworks to be used, I had to bind 3 methods to DOM
+  */
 class GameUIWrapper {
   constructor() {
     this.game = new RockPaperScissors();
   }
 
+  /** Hides certain elements on the view
+    */
   clearUI() {
     timerElement.innerText = '';
     player2OptionsWrapper.setAttribute('aria-hidden', true);
@@ -28,11 +35,16 @@ class GameUIWrapper {
     clearInterval(intervalId);
   }
 
+  /** Renders time remaining on play screen
+    *
+    */
   renderTime() {
     timerElement.innerText = this.game.timeleft + 's';
   }
 
-  renderUI() {
+  /** Renders the play screen
+    */
+  renderGameScreen() {
     gameCustomizationElement.setAttribute('aria-hidden', true);
     gameElement.setAttribute('aria-hidden', false);
     resetButtonElement.setAttribute('aria-hidden', false);
@@ -45,6 +57,8 @@ class GameUIWrapper {
     player1NameElement.innerText = this.game.getPlayerText(1);
   }
 
+  /** Renders player's options
+    */
   renderOptions() {
     const options = this.game.getOptions();
     let html = '';
@@ -58,6 +72,8 @@ class GameUIWrapper {
     player2Options.innerHTML = html;
   }
 
+  /** Renders the winner of the game
+    */
   renderWinner() {
     player1SelectionElement.className = 'sprites icon-' + this.game.getPlayerSelection(1);
     player2SelectionElement.className = 'sprites icon-' + this.game.getPlayerSelection(2);
@@ -69,6 +85,8 @@ class GameUIWrapper {
     }
   }
 
+  /** Lets player to play again or re-run the simulation
+    */
   resetGame() {
     if (!this.game.inProgress) {
       player1SelectionElement.className = player2SelectionElement.className = '';
@@ -77,6 +95,8 @@ class GameUIWrapper {
     }
   }
 
+  /** Starts the game based on customization
+    */
   startGame() {
     resetButtonElement.setAttribute('disabled', true);
     const isBazingaMode = document.getElementById('game-mode-bazinga').checked;
@@ -94,9 +114,11 @@ class GameUIWrapper {
       this.clearUI();
     });
 
-    this.renderUI();
+    this.renderGameScreen();
   }
 
+  /** Lets player to change the selection
+    */
   changeSelection(selection) {
     const selectedElement = document.querySelector('.icon-selected');
     const newSelectedElement = document.getElementById('selection-' + selection);
@@ -107,6 +129,8 @@ class GameUIWrapper {
     this.game.makeSelection(2, selection);
   }
 
+  /** Binds methods to DOM
+    */
   bindToWindow() {
     window.changeSelection = this.changeSelection.bind(this);
     window.resetGame = this.resetGame.bind(this);
