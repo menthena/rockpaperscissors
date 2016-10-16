@@ -33,4 +33,22 @@ body {
 		color: #FFF;
 		font-size: 14px;
 	}
+
+	.sprites {
+		background-image: url(../images/sprites.png);
+		background-size: 320px 64px;
+	}
+
+	i[class*="icon"] {
+		display: block;
+		width: 64px;
+		height: 64px;
+	}
+
+	@each $option in $options {
+		$i: index($options, $option);
+		.icon-#{$option} {
+			background-position: ($i - 1)*-64px 0;
+		}
+	}
 }
