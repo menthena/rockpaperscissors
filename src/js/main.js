@@ -3,7 +3,6 @@ require('../css/main.scss');
 import RockPaperScissors from './RockPaperScissors';
 import CONST from './constant';
 
-let intervalId;
 const gameCustomizationElement = document.getElementById('game-customization');
 const gameElement = document.getElementById('game');
 const resetButtonElement = document.getElementById('reset-game');
@@ -32,7 +31,7 @@ class GameUIWrapper {
     timerElement.innerText = '';
     player2OptionsWrapper.setAttribute('aria-hidden', true);
     resetButtonElement.removeAttribute('disabled');
-    clearInterval(intervalId);
+    clearInterval(this.intervalId);
   }
 
   /** Renders time remaining on play screen
@@ -42,11 +41,12 @@ class GameUIWrapper {
     timerElement.innerText = this.game.timeleft + 's';
   }
 
-  /** Renders the play screen
+  /** Renders the game screen
     */
   renderGameScreen() {
     gameCustomizationElement.setAttribute('aria-hidden', true);
     gameElement.setAttribute('aria-hidden', false);
+    resetButtonElement.setAttribute('disabled', true);
     resetButtonElement.setAttribute('aria-hidden', false);
     if (!this.game.isSimulation) {
       this.renderOptions();
@@ -98,7 +98,6 @@ class GameUIWrapper {
   /** Starts the game based on customization
     */
   startGame() {
-    resetButtonElement.setAttribute('disabled', true);
     const isBazingaMode = document.getElementById('game-mode-bazinga').checked;
     const isSimulation = document.getElementById('simulate-cpu').checked;
 
@@ -107,7 +106,7 @@ class GameUIWrapper {
     this.game.start();
     this.game.simulate();
 
-    intervalId = setInterval(this.renderTime.bind(this), 1000);
+    this.intervalId = setInterval(this.renderTime.bind(this), 1000);
 
     this.game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS, () => {
       this.renderWinner();
@@ -131,7 +130,7 @@ class GameUIWrapper {
 
   /** Binds methods to DOM
     */
-  bindToWindow() {
+  bindToDOM() {
     window.changeSelection = this.changeSelection.bind(this);
     window.resetGame = this.resetGame.bind(this);
     window.startGame = this.startGame.bind(this);
@@ -140,4 +139,4 @@ class GameUIWrapper {
 }
 
 const UIWrapper = new GameUIWrapper();
-UIWrapper.bindToWindow();
+UIWrapper.bindToDOM();

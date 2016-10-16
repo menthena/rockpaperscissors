@@ -80,7 +80,7 @@ export default class RockPaperScissors {
     }
   }
 
-  /** Add players to the game
+  /** Sets players of the game
     */
   setPlayers() {
     this.player1 = {
