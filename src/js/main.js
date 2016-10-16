@@ -4,7 +4,6 @@ import RockPaperScissors from './RockPaperScissors';
 import CONST from './constant';
 
 let intervalId;
-const game = new RockPaperScissors();
 const gameCustomizationElement = document.getElementById('game-customization');
 const gameElement = document.getElementById('game');
 const resetButtonElement = document.getElementById('reset-game');
@@ -15,86 +14,102 @@ const player2SelectionElement = document.getElementById('player2-selection');
 const player1NameElement = document.getElementById('player1');
 const player2NameElement = document.getElementById('player2');
 const winnerElement = document.getElementById('winner');
-const timer = document.getElementById('timer');
+const timerElement = document.getElementById('timer');
 
-const clearUI = () => {
-  timer.innerText = '';
-  player2OptionsWrapper.setAttribute('aria-hidden', true);
-  clearInterval(intervalId);
-};
-
-const renderInitialUI = () => {
-  gameCustomizationElement.setAttribute('aria-hidden', true);
-  gameElement.setAttribute('aria-hidden', false);
-  resetButtonElement.setAttribute('aria-hidden', false);
-  if (!game.isSimulation) {
-    renderOptions();
+class GameUIWrapper {
+  constructor() {
+    this.game = new RockPaperScissors();
   }
-  renderTime();
 
-  player2NameElement.innerText = game.getPlayerText(2);
-  player1NameElement.innerText = game.getPlayerText(1);
-};
-
-const renderTime = () => {
-  timer.innerText = game.timeleft + 's';
-};
-
-const renderOptions = () => {
-  const options = game.getOptions();
-  let html = '';
-  options.forEach((option) => {
-    let defaultSelection = ((option === 'Rock') ? 'class="icon-selected"' : '');
-    html += '<a id="selection-' + option + '" onclick="changeSelection(\'' + option + '\')"' +
-      defaultSelection + '><i class="sprites icon-' + option + '"></i></a>';
-  });
-  player2OptionsWrapper.setAttribute('aria-hidden', false);
-
-  player2Options.innerHTML = html;
-};
-
-const renderWinner = () => {
-  player1SelectionElement.className = 'sprites icon-' + game.getPlayerSelection(1);
-  player2SelectionElement.className = 'sprites icon-' + game.getPlayerSelection(2);
-
-  if (!game.winner) {
-    winnerElement.innerText = 'It is a tie!';
-  } else {
-    winnerElement.innerText = 'Player ' + game.winner + ' wins!';
+  clearUI() {
+    timerElement.innerText = '';
+    player2OptionsWrapper.setAttribute('aria-hidden', true);
+    clearInterval(intervalId);
   }
-};
 
-window.resetGame = () => {
-  player1SelectionElement.className = player2SelectionElement.className = '';
-  winnerElement.innerText = '';
-  window.startGame();
-};
-
-window.startGame = () => {
-  const isBazingaMode = document.getElementById('game-mode-bazinga').checked;
-  const isSimulation = document.getElementById('simulate-cpu').checked;
-
-  game.isSimulation = isSimulation;
-  game.isBazingaMode = isBazingaMode;
-  game.start();
-  game.simulate();
-
-  intervalId = setInterval(renderTime, 1000);
-
-  game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS, () => {
-    renderWinner();
-    clearUI();
-  });
-
-  renderInitialUI();
-};
-
-window.changeSelection = (selection) => {
-  const selectedElement = document.querySelector('.icon-selected');
-  const newSelectedElement = document.getElementById('selection-' + selection);
-  if (selectedElement) {
-    selectedElement.className = '';
-    newSelectedElement.className = 'icon-selected';
+  renderTime() {
+    timerElement.innerText = this.game.timeleft + 's';
   }
-  game.makeSelection(2, selection);
-};
+
+  renderUI() {
+    gameCustomizationElement.setAttribute('aria-hidden', true);
+    gameElement.setAttribute('aria-hidden', false);
+    resetButtonElement.setAttribute('aria-hidden', false);
+    if (!this.game.isSimulation) {
+      this.renderOptions();
+    }
+    this.renderTime();
+
+    player2NameElement.innerText = this.game.getPlayerText(2);
+    player1NameElement.innerText = this.game.getPlayerText(1);
+  }
+
+  renderOptions() {
+    const options = this.game.getOptions();
+    let html = '';
+    options.forEach((option) => {
+      let defaultSelection = ((option === 'Rock') ? 'class="icon-selected"' : '');
+      html += '<a id="selection-' + option + '" onclick="changeSelection(\'' + option + '\')"' +
+        defaultSelection + '><i class="sprites icon-' + option + '"></i></a>';
+    });
+    player2OptionsWrapper.setAttribute('aria-hidden', false);
+
+    player2Options.innerHTML = html;
+  }
+
+  renderWinner() {
+    player1SelectionElement.className = 'sprites icon-' + this.game.getPlayerSelection(1);
+    player2SelectionElement.className = 'sprites icon-' + this.game.getPlayerSelection(2);
+
+    if (!this.game.winner) {
+      winnerElement.innerText = 'It is a tie!';
+    } else {
+      winnerElement.innerText = 'Player ' + this.game.winner + ' wins!';
+    }
+  }
+
+  resetGame() {
+    player1SelectionElement.className = player2SelectionElement.className = '';
+    winnerElement.innerText = '';
+    this.startGame();
+  }
+
+  startGame() {
+    const isBazingaMode = document.getElementById('game-mode-bazinga').checked;
+    const isSimulation = document.getElementById('simulate-cpu').checked;
+
+    this.game.isSimulation = isSimulation;
+    this.game.isBazingaMode = isBazingaMode;
+    this.game.start();
+    this.game.simulate();
+
+    intervalId = setInterval(this.renderTime.bind(this), 1000);
+
+    this.game.scheduleEnd(CONST.THROW_TIMEOUT_IN_SECONDS, () => {
+      this.renderWinner();
+      this.clearUI();
+    });
+
+    this.renderUI();
+  }
+
+  changeSelection(selection) {
+    const selectedElement = document.querySelector('.icon-selected');
+    const newSelectedElement = document.getElementById('selection-' + selection);
+    if (selectedElement) {
+      selectedElement.className = '';
+      newSelectedElement.className = 'icon-selected';
+    }
+    this.game.makeSelection(2, selection);
+  }
+
+  bindToWindow() {
+    window.changeSelection = this.changeSelection.bind(this);
+    window.resetGame = this.resetGame.bind(this);
+    window.startGame = this.startGame.bind(this);
+  }
+
+}
+
+const UIWrapper = new GameUIWrapper();
+UIWrapper.bindToWindow();
