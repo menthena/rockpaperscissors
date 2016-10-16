@@ -10,13 +10,13 @@
 	<main id="rock-paper-scissors">
 		<nav>
 			<ul>
-				<li><button>New game</button></li>
-				<li><button onclick="" id="reset-game" aria-hidden="true">Reset game</button></li>
+				<li><button onclick="newGame()">New game</button></li>
+				<li><button onclick="resetGame()" id="reset-game" aria-hidden="true">Reset game</button></li>
 			</ul>
 		</nav>
 		<section id="game-customization">
 			<h1>Rock paper scissors</h1>
-			<form>
+			<form onsubmit="startGame(); return false;">
 				<fieldset>
 					<legend>Game mode</legend>
 						<input type="radio" name="game-mode" checked id="game-mode-normal" value="normal">
@@ -38,13 +38,8 @@
 			</form>
 		</section>
 
-		<section id="game">
+		<section id="game" aria-hidden="true">
 			<h1>Rock paper scissors</h1>
-			<i class="sprites icon-rock"></i>
-			<i class="sprites icon-paper"></i>
-			<i class="sprites icon-scissors"></i>
-			<i class="sprites icon-lizard"></i>
-			<i class="sprites icon-spock"></i>
 		</section>
 	</main>
 </body>

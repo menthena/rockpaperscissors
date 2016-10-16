@@ -2,6 +2,9 @@
 
 #rock-paper-scissors {
   nav {
+    li {
+      display: inline-block;
+    }
     button {
       background: darken($dark-color, 10);
       margin-right: 5px;
@@ -13,12 +16,17 @@
   }
 }
 
-#game-customization {
+#game-customization, #game {
   border: 1px lighten($dark-color, 30) solid;
   border-radius: 6px;
   padding: 0px 15px;
   margin-top: 10px;
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
 
+#game-customization {
   fieldset {
     border: 0;
     padding: 0 0 20px;
